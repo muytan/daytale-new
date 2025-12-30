@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw Journal — Daytale</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Quicksand:wght@300;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #FAF9F6; color: #333; font-family: 'Quicksand', sans-serif; background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png"); }
+        .heading-font { font-family: 'DM Serif Display', serif; }
+        .mono { font-family: 'Space Mono', monospace; }
+        .day-card { 
+            aspect-ratio: 1 / 1; background: #fff; border: 1px solid #e5e7eb; position: relative; 
+            cursor: pointer; border-radius: 4px; transition: all 0.3s ease; 
+        }
+        .day-card:hover { transform: scale(1.08); z-index: 10; box-shadow: 10px 10px 0px -2px #E2E8CE; border-color: #8B9474; }
+        .day-number { position: absolute; top: 4px; left: 6px; font-size: 10px; font-weight: bold; color: #d1d5db; }
+        #canvas-container { display: none; position: fixed; inset: 0; background: rgba(250, 249, 246, 0.98); z-index: 100; flex-direction: column; align-items: center; justify-content: center; }
+        canvas { background: white; border: 1px solid #333; box-shadow: 20px 20px 0px -5px #F7E1D7; cursor: crosshair; touch-action: none; }
+        .preview-img { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; }
+        .label-sticker { background: #333; color: #fff; padding: 4px 12px; font-size: 11px; border-radius: 2px; font-weight: bold; text-transform: uppercase; }
+    </style>
+</head>
+<body class="pb-20">
+    <nav class="p-8"><a href="index.html" class="heading-font text-xl hover:opacity-50 transition">← Daytale.</a></nav>
+
+    <header class="text-center mb-16 px-4">
+        <div class="label-sticker mono mb-6 inline-block">
+            <span id="live-date">-- --- 2026</span> | <span id="live-clock">00:00:00</span>
+        </div>
+        <h1 class="heading-font text-5xl">Your Visual Archive</h1>
+        <p class="text-stone-400 italic text-sm mt-2">Documenting the Year 2026</p>
+    </header>
+
+    <div class="max-w-6xl mx-auto px-6">
+        <div id="calendar" class="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 lg:grid-cols-14 gap-3"></div>
+    </div>
+
+    <div id="canvas-container">
+        <h2 id="current-date-display" class="heading-font text-4xl mb-8"></h2>
+        <canvas id="drawingCanvas" width="450" height="450"></canvas>
+        <div class="mt-10 flex gap-6">
+            <button onclick="closeCanvas()" class="text-[10px] font-bold tracking-widest uppercase border-b-2 border-black pb-1">Exit</button>
+            <button onclick="clearCanvas()" class="text-[10px] font-bold tracking-widest uppercase text-red-400 border-b-2 border-red-200 pb-1">Clear Canvas</button>
+            <button onclick="saveCanvas()" class="bg-[#333] text-white px-10 py-3 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-black transition">Save Entry</button>
+        </div>
+    </div>
+
+    <script>
+        const calendarEl = document.getElementById('calendar');
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.getElementById('canvas-container');
+        const dateDisplay = document.getElementById('current-date-display');
+        let isDrawing = false;
+        let activeDate = null;
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-GB');
+            document.getElementById('live-date').innerText = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+        setInterval(updateClock, 1000);
+
+        function initCalendar() {
+            for (let d = 1; d <= 365; d++) {
+                const dateStr = `2026-day-${d}`;
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'day-card';
+                dayDiv.innerHTML = `<span class="day-number">${d}</span>`;
+                dayDiv.onclick = () => openCanvas(dateStr, d);
+                const saved = localStorage.getItem(`dayraw_${dateStr}`);
+                if (saved) dayDiv.innerHTML += `<img src="${saved}" class="preview-img">`;
+                calendarEl.appendChild(dayDiv);
+            }
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            const r = canvas.getBoundingClientRect();
+            ctx.moveTo(e.clientX - r.left, e.clientY - r.top);
+            ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.strokeStyle = '#333';
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const r = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - r.left, e.clientY - r.top);
+            ctx.stroke();
+        }
+
+        function openCanvas(date, num) {
+            activeDate = date;
+            dateDisplay.innerText = `Day ${num} Reflection`;
+            container.style.display = 'flex';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const saved = localStorage.getItem(`dayraw_${activeDate}`);
+            if (saved) { const img = new Image(); img.onload = () => ctx.drawImage(img, 0, 0); img.src = saved; }
+        }
+
+        function closeCanvas() { container.style.display = 'none'; }
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+        function saveCanvas() {
+            localStorage.setItem(`dayraw_${activeDate}`, canvas.toDataURL());
+            location.reload(); 
+        }
+        initCalendar();
+        updateClock();
+    </script>
+</body>
+</html>
