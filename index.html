@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daytale — Your Creative Digital Sanctuary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Quicksand:wght@300;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #FAF9F6; 
+            color: #333; 
+            font-family: 'Quicksand', sans-serif;
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        }
+        .serif-italic { font-family: 'Instrument Serif', serif; font-style: italic; }
+        .heading-font { font-family: 'DM Serif Display', serif; }
+        
+        .nav-link { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+        
+        .card-stack {
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: white;
+        }
+        .card-stack:hover {
+            transform: rotate(-1deg) translateY(-5px);
+            box-shadow: 15px 15px 0px -5px #E2E8CE; 
+        }
+    </style>
+</head>
+<body class="selection:bg-green-100">
+
+    <nav class="flex items-center justify-between px-6 py-8 md:px-12">
+        <div class="text-2xl heading-font tracking-tighter">Daytale.</div>
+        
+        <div class="hidden md:flex gap-10 items-center">
+            <a href="draw.html" class="nav-link hover:opacity-50 transition">Draw Journal</a>
+            <a href="#" class="nav-link hover:opacity-50 transition">Guides + Templates</a>
+            <a href="#" class="nav-link hover:opacity-50 transition">Quote Generator</a>
+            <a href="draw.html" class="bg-[#333] text-[#FAF9F6] px-6 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase transition hover:bg-black">Enter Space</a>
+        </div>
+    </nav>
+
+    <section class="relative pt-12 pb-24 px-6 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="heading-font text-5xl md:text-7xl leading-tight mb-6">
+                Romanticize the <span class="serif-italic text-stone-400">Ordinary</span> Moments of Your Life.
+            </h1>
+            <p class="text-stone-500 text-sm md:text-base mb-10 tracking-wide leading-relaxed max-w-lg mx-auto">
+                A cozy digital space for brain dumps, creative reflections, and visual memories. Built for those who find beauty in the daily process.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="draw.html" class="px-8 py-3 bg-[#8B9474] text-white rounded-lg text-sm font-medium hover:bg-[#7a8265] transition shadow-sm">Start Your First Entry</a>
+                <a href="#" class="px-8 py-3 border border-stone-200 bg-white rounded-lg text-sm font-medium hover:bg-stone-50 transition">View Daily Prompts</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid md:grid-cols-3 gap-8">
+            
+            <div class="card-stack p-8 rounded-xl relative overflow-hidden">
+                <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold mb-4 block underline decoration-green-200 underline-offset-4">01. Mindfulness</span>
+                <h3 class="heading-font text-3xl mb-4">Intentional <br><span class="serif-italic text-2xl">Reflections</span></h3>
+                <p class="text-stone-500 text-sm leading-loose mb-8">
+                    Clear your mind and process your thoughts. A safe space to track your personal growth and find clarity in your routine.
+                </p>
+            </div>
+
+            <div class="card-stack p-8 rounded-xl relative overflow-hidden">
+                <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold mb-4 block underline decoration-orange-200 underline-offset-4">02. Structure</span>
+                <h3 class="heading-font text-3xl mb-4">Creative <br><span class="serif-italic text-2xl">Bullet Journal</span></h3>
+                <p class="text-stone-500 text-sm leading-loose mb-8">
+                    Organize your projects and habits with minimalist digital layouts. Designed for high-focus sessions and clean planning.
+                </p>
+            </div>
+
+            <div class="card-stack p-8 rounded-xl relative overflow-hidden">
+                <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold mb-4 block underline decoration-blue-200 underline-offset-4">03. Visuals</span>
+                <h3 class="heading-font text-3xl mb-4">Digital <br><span class="serif-italic text-2xl">Visual Archive</span></h3>
+                <p class="text-stone-500 text-sm leading-loose mb-8">
+                    Capture the world through sketches and messy notes. Build a visual timeline of your year, one drawing at a time.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="mt-20 mb-20 px-6">
+        <div class="max-w-4xl mx-auto bg-white rounded-[2rem] p-12 text-center border border-stone-100">
+            <h2 class="heading-font text-4xl mb-4 italic">“Focus on the progress, not the perfection.”</h2>
+            <p class="text-xs uppercase tracking-[0.2em] text-stone-400 mb-8 font-bold">— Daytale Daily Inspiration</p>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center border-t border-stone-100">
+        <p class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Built for the creative mind. &copy; 2026 Daytale</p>
+    </footer>
+
+</body>
+</html>
